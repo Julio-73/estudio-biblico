@@ -483,7 +483,20 @@
       linea2 = `Gracias ${anteriores} por liderar con pasión y @${ultimo} 😁 por apoyar en el estudio !!`;
     }
 
-    const msg = `Buenas noticias familiaaa 🚀✏️\nTerminamos el estudio bíblico ${estudio} #${sesion} con ${joven}! Es un joven que está muy animado de leer la Palabra y poner a Dios en primer lugar !! ${linea2} Oren por ${joven}, es un gran chico para que sea nuestro próximo hermano 🙏🏼🙏🏼🙏🏼🤍`;
+    const frases = {
+      'Buscando a Dios': 'quiere buscar a Dios con todo su corazón',
+      'La Palabra de Dios': 'quiere leer la Palabra y ponerla en práctica',
+      'Discipulado': 'está dispuesto a seguir y obedecer a Jesús',
+      'La Venida del Reino': 'quiere ser parte del reino de Dios',
+      'Pecado y Arrepentimiento': 'está dispuesto a arrepentirse y alejarse del pecado',
+      'Luz y Oscuridad': 'quiere pasar de la oscuridad a la luz de Dios',
+      'La Cruz': 'entiende el sacrificio de Jesús en la cruz',
+      'La Iglesia': 'quiere conocer y ser parte de la iglesia de Dios',
+      'Definiciones de Pecado': 'está aprendiendo a identificar y alejarse del pecado',
+      'Relato Médico de la Crucifixión de Cristo': 'comprende el sufrimiento de Jesús por nosotros'
+    };
+    const frase = frases[estudio] || 'está muy animado de leer la Palabra y poner a Dios en primer lugar';
+    const msg = `Buenas noticias familiaaa 🚀✏️\nTerminamos el estudio bíblico ${estudio} #${sesion} con ${joven}! Es un joven que ${frase} !! ${linea2} Oren por ${joven}, es un gran chico para que sea nuestro próximo hermano 🙏🏼🙏🏼🙏🏼🤍`;
 
     el.textContent = msg;
     el.classList.remove('empty');
@@ -540,4 +553,5 @@
   }
 </script>
 </body>
-</html>  
+</html>
+
