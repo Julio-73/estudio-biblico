@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -66,7 +65,7 @@
     <p>Genera tu imagen con foto y texto para WhatsApp</p>
     <div class="divider"></div>
   </header>
- 
+
   <div class="card">
     <div class="card-title">📸 Foto del Estudio</div>
     <input type="file" accept="image/*" id="fotoInput" onchange="handleFoto(event)" style="display:none">
@@ -77,11 +76,16 @@
     <img id="preview" alt="Vista previa">
     <p class="foto-nombre" id="fotoNombre"></p>
   </div>
- 
+
   <div class="card">
     <div class="card-title">📖 Datos del Estudio</div>
-    <label>Nombre del joven estudiado</label>
+    <label>Nombre del joven/joven estudiado</label>
     <input type="text" id="nombreJoven" placeholder="Ej: Cris" oninput="gen()">
+    <label>Género</label>
+    <select id="genero" onchange="gen()">
+      <option value="hombre">Hombre</option>
+      <option value="mujer">Mujer</option>
+    </select>
     <label>Estudio bíblico</label>
     <select id="estudio" onchange="gen()">
       <option value="">— Selecciona el estudio —</option>
@@ -97,7 +101,7 @@
       <option>Relato Médico de la Crucifixión de Cristo</option>
     </select>
   </div>
- 
+
   <div class="card">
     <div class="card-title">🙌 Hermanos que enseñan</div>
     <label>Hermano que lidera</label>
@@ -111,12 +115,12 @@
     </div>
     <button class="btn-add" onclick="addApoyo()">+ Agregar hermano</button>
   </div>
- 
+
   <div class="card">
     <div class="card-title">💬 Mensaje generado</div>
     <div class="mensaje-preview empty" id="mensajePreview">El mensaje aparecerá aquí automáticamente...</div>
   </div>
- 
+
   <div class="actions">
     <button class="btn-img" onclick="generarImagen()">🖼️ Generar imagen con foto + texto</button>
     <button class="btn-copy" onclick="copiarMensaje()">📋 Copiar solo el texto</button>
@@ -127,13 +131,13 @@
   </div>
   <p class="nota">💡 Genera la imagen → se descarga sola → compártela en tu grupo de WhatsApp</p>
 </div>
- 
+
 <canvas id="canvasOut"></canvas>
 <div class="toast" id="toast">✅ ¡Listo!</div>
- 
+
 <script>
   let fotoDataUrl = null;
- 
+
   function abrirGaleria() {
     const i = document.getElementById('fotoInput');
     i.removeAttribute('capture'); i.click();
@@ -161,6 +165,7 @@
     const joven = document.getElementById('nombreJoven').value.trim();
     const estudio = document.getElementById('estudio').value;
     
+    const genero = document.getElementById('genero').value;
     const lider = document.getElementById('lider').value.trim();
     const apoyos = getApoyos();
     const el = document.getElementById('mensajePreview');
@@ -181,6 +186,11 @@
       'Relato Médico de la Crucifixión de Cristo':'comprende el sufrimiento de Jesús por nosotros'
     };
     const frase = frases[estudio] || 'está muy animado de leer la Palabra';
+    const esHombre = genero === 'hombre';
+    const intro = esHombre ? 'Es un joven que' : 'Es una joven que';
+    const cierre = esHombre
+      ? 'es un gran chico, oren para que sea nuestro próximo hermano 🙏🏻🛡️🔥'
+      : 'es una mujer que tiene un gran corazón, oren para que sea nuestra próxima hermana 🙏🏻🙏🏻🤍';
     let lineaH = '';
     if (apoyos.length === 0) {
       lineaH = `Gracias @${lider} por liderar con pasión este estudio !!`;
@@ -189,7 +199,7 @@
     } else {
       lineaH = `Gracias @${lider} por liderar con pasión y ${apoyos.map(a=>'@'+a).join(', ')} por apoyar en el estudio !!`;
     }
-    const msg = `Buenas noticias familiaaa 🚀✏️\nTerminamos el estudio bíblico ${estudio} con ${joven}! Es un joven que ${frase} !! ${lineaH} Oren por ${joven}, es un gran chico para que sea nuestro próximo hermano 🙏🏼🙏🏼🙏🏼🤍`;
+    const msg = `Buenas noticias familiaaa 🚀✏️\nTerminamos el estudio bíblico ${estudio} con ${joven}! ${intro} ${frase} !! ${lineaH} Oren por ${joven}, ${cierre}`;
     el.textContent = msg; el.classList.remove('empty');
   }
   function getMensaje() {
@@ -224,78 +234,115 @@
     t.textContent = msg; t.classList.add('show');
     setTimeout(()=>t.classList.remove('show'), 2800);
   }
- 
-  // === GENERAR IMAGEN CON FOTO + TEXTO ===
+
+  // === GENERAR IMAGEN IDENTICA A WHATSAPP ===
   function generarImagen() {
     const texto = getMensaje();
     if (!texto) { alert('Completa los datos primero.'); return; }
     if (!fotoDataUrl) { alert('Selecciona una foto del estudio primero.'); return; }
- 
+
     const img = new Image();
     img.onload = () => {
-      const W = 900;
+      // Dimensiones: ancho fijo 1080px estilo WhatsApp
+      const W = 1080;
       const imgH = Math.round((img.height / img.width) * W);
-      const fontSize = 30;
-      const padding = 40;
-      const lineHeight = fontSize * 1.6;
-      const maxTW = W - padding * 2;
- 
-      // Canvas temporal para medir texto
+
+      // Config texto igual a WhatsApp
+      const fontSize = 38;
+      const lineHeight = fontSize * 1.5;
+      const paddingX = 44;
+      const paddingY = 36;
+      const maxTW = W - paddingX * 2;
+      const borderRadius = 24;
+
+      // Medir líneas
       const tmpC = document.createElement('canvas');
-      tmpC.width = W; const tmpCtx = tmpC.getContext('2d');
-      tmpCtx.font = `${fontSize}px Arial, sans-serif`;
- 
+      tmpC.width = W;
+      const tmpCtx = tmpC.getContext('2d');
+      tmpCtx.font = `${fontSize}px -apple-system, Helvetica, Arial, sans-serif`;
+
       function calcLines(txt) {
         const lines = [];
         for (const para of txt.split('\n')) {
           const words = para.split(' ');
           let line = '';
           for (const w of words) {
-            const test = line + (line?' ':'')+w;
-            if (tmpCtx.measureText(test).width > maxTW && line) { lines.push(line); line=w; }
-            else line=test;
+            const test = line + (line ? ' ' : '') + w;
+            if (tmpCtx.measureText(test).width > maxTW && line) {
+              lines.push(line); line = w;
+            } else { line = test; }
           }
           if (line) lines.push(line);
         }
         return lines;
       }
- 
+
       const lines = calcLines(texto);
-      const textBgH = lines.length * lineHeight + padding * 2;
-      const totalH = imgH + textBgH;
- 
+      const bubbleH = lines.length * lineHeight + paddingY * 2 + 20;
+      const totalH = imgH + bubbleH;
+
       const canvas = document.getElementById('canvasOut');
-      canvas.width = W; canvas.height = totalH;
+      canvas.width = W;
+      canvas.height = totalH;
       const ctx = canvas.getContext('2d');
- 
-      // Foto
+
+      // 1. Fondo negro total
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, W, totalH);
+
+      // 2. Foto centrada arriba
       ctx.drawImage(img, 0, 0, W, imgH);
- 
-      // Fondo verde WhatsApp
+
+      // 3. Burbuja WhatsApp verde con bordes redondeados
+      const bx = 0;
+      const by = imgH;
+      const bw = W;
+      const bh = bubbleH;
       ctx.fillStyle = '#075e54';
-      ctx.fillRect(0, imgH, W, textBgH);
- 
-      // Texto blanco
+      ctx.beginPath();
+      ctx.moveTo(bx + borderRadius, by);
+      ctx.lineTo(bx + bw - borderRadius, by);
+      ctx.quadraticCurveTo(bx + bw, by, bx + bw, by + borderRadius);
+      ctx.lineTo(bx + bw, by + bh);
+      ctx.lineTo(bx, by + bh);
+      ctx.lineTo(bx, by + borderRadius);
+      ctx.quadraticCurveTo(bx, by, bx + borderRadius, by);
+      ctx.closePath();
+      ctx.fill();
+
+      // 4. Texto blanco estilo WhatsApp
       ctx.fillStyle = '#ffffff';
-      ctx.font = `${fontSize}px Arial, sans-serif`;
-      let y = imgH + padding + fontSize;
+      ctx.font = `${fontSize}px -apple-system, Helvetica, Arial, sans-serif`;
+      ctx.textBaseline = 'top';
+      let y = by + paddingY;
       for (const line of lines) {
-        ctx.fillText(line, padding, y);
+        ctx.fillText(line, paddingX, y);
         y += lineHeight;
       }
- 
+
+      // 5. Timestamp estilo WhatsApp (esquina inferior derecha)
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2,'0');
+      const mm = String(now.getMinutes()).padStart(2,'0');
+      ctx.font = `28px -apple-system, Helvetica, Arial, sans-serif`;
+      ctx.fillStyle = 'rgba(255,255,255,0.65)';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(`${hh}:${mm}`, W - paddingX - 60, by + bh - 16);
+
       // Descargar
       const link = document.createElement('a');
       link.download = 'estudio-biblico.jpg';
-      link.href = canvas.toDataURL('image/jpeg', 0.93);
+      link.href = canvas.toDataURL('image/jpeg', 0.95);
       link.click();
-      toast('✅ ¡Imagen descargada! Compártela en WhatsApp');
+      toast('✅ ¡Imagen lista! Compártela en WhatsApp');
     };
     img.src = fotoDataUrl;
   }
 </script>
 </body>
 </html>
+
+
 
 
 
