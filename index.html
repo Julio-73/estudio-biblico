@@ -188,18 +188,20 @@
     const frase = frases[estudio] || 'está muy animado de leer la Palabra';
     const esHombre = genero === 'hombre';
     const intro = esHombre ? 'Es un joven que' : 'Es una joven que';
+    const cierreEmojis = esHombre ? '🙏🏻🛡️🔥💙' : '🙏🏻🙌🏻😊🌟';
     const cierre = esHombre
-      ? 'es un gran chico, oren para que sea nuestro próximo hermano 🙏🏻🛡️🔥'
-      : 'es una mujer que tiene un gran corazón, oren para que sea nuestra próxima hermana 🙏🏻🙏🏻🤍';
+      ? `es un gran chico, oren para que sea nuestro próximo hermano ${cierreEmojis}`
+      : `es una mujer que tiene un gran corazón, oren para que sea nuestra próxima hermana ${cierreEmojis}`;
+    const emojiLider = esHombre ? '🔥' : '💕';
     let lineaH = '';
     if (apoyos.length === 0) {
-      lineaH = `Gracias @${lider} por liderar con pasión este estudio !!`;
+      lineaH = `Gracias @${lider} ${emojiLider} por liderar con pasión este estudio !!`;
     } else if (apoyos.length === 1) {
-      lineaH = `Gracias @${lider} por liderar con pasión y @${apoyos[0]} por apoyar en el estudio !!`;
+      lineaH = `Gracias @${lider} ${emojiLider} por liderar con pasión y @${apoyos[0]} por apoyar en el estudio !!`;
     } else {
-      lineaH = `Gracias @${lider} por liderar con pasión y ${apoyos.map(a=>'@'+a).join(', ')} por apoyar en el estudio !!`;
+      lineaH = `Gracias @${lider} ${emojiLider} por liderar con pasión y ${apoyos.map(a=>'@'+a).join(', ')} por apoyar en el estudio !!`;
     }
-    const msg = `Buenas noticias familiaaa 🚀✏️\nTerminamos el estudio bíblico ${estudio} con ${joven}! ${intro} ${frase} !! ${lineaH} Oren por ${joven}, ${cierre}`;
+    const msg = `Buenas noticias familiaaa 🌟🚀🚀\nTerminamos el estudio bíblico ${estudio} con ${joven}! ${intro} ${frase} !! ${lineaH} Oren por ${joven}, ${cierre}`;
     el.textContent = msg; el.classList.remove('empty');
   }
   function getMensaje() {
@@ -341,6 +343,7 @@
 </script>
 </body>
 </html>
+
 
 
 
