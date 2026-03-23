@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,343 +8,65 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C97A;
-    --dark: #0F0E0C;
-    --dark2: #1A1813;
-    --dark3: #242018;
-    --text: #F0E6CC;
-    --muted: #9A8E72;
-    --green-wa: #25D366;
+    --gold: #C9A84C; --gold-light: #E8C97A; --dark: #0F0E0C;
+    --dark2: #1A1813; --dark3: #242018; --text: #F0E6CC;
+    --muted: #9A8E72; --green-wa: #25D366;
   }
-
-  body {
-    background: var(--dark);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 0 60px;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 30% at 90% 80%, rgba(201,168,76,0.06) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    width: 100%;
-    max-width: 540px;
-    padding: 0 20px;
-    position: relative;
-    z-index: 1;
-  }
-
-  header {
-    text-align: center;
-    padding: 48px 0 36px;
-  }
-
-  .cross-icon {
-    font-size: 28px;
-    opacity: 0.7;
-    display: block;
-    margin-bottom: 12px;
-  }
-
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--gold-light);
-    letter-spacing: 0.02em;
-    line-height: 1.2;
-  }
-
-  header p {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 8px;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-  }
-
-  .divider {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 16px auto 0;
-  }
-
-  .card {
-    background: var(--dark2);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 16px;
-    padding: 28px 24px;
-    margin-bottom: 16px;
-  }
-
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 13px;
-    color: var(--gold);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .card-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(201,168,76,0.2);
-  }
-
-  label {
-    display: block;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 7px;
-    margin-top: 16px;
-  }
-
+  body { background: var(--dark); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 0 0 60px; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.12) 0%, transparent 60%), radial-gradient(ellipse 40% 30% at 90% 80%, rgba(201,168,76,0.06) 0%, transparent 50%); pointer-events: none; z-index: 0; }
+  .container { width: 100%; max-width: 540px; padding: 0 20px; position: relative; z-index: 1; }
+  header { text-align: center; padding: 48px 0 36px; }
+  .cross-icon { font-size: 28px; opacity: 0.7; display: block; margin-bottom: 12px; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--gold-light); line-height: 1.2; }
+  header p { font-size: 13px; color: var(--muted); margin-top: 8px; font-weight: 300; letter-spacing: 0.05em; }
+  .divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 16px auto 0; }
+  .card { background: var(--dark2); border: 1px solid rgba(201,168,76,0.15); border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .card-title::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
+  label { display: block; font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 7px; margin-top: 16px; }
   label:first-of-type { margin-top: 0; }
-
-  input, select {
-    width: 100%;
-    background: var(--dark3);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 10px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    padding: 12px 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    -webkit-appearance: none;
-  }
-
+  input, select { width: 100%; background: var(--dark3); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 12px 14px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none; }
   input::placeholder { color: var(--muted); opacity: 0.6; }
-
-  input:focus, select:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
-  }
-
-  select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 38px;
-    cursor: pointer;
-  }
-
-  select option {
-    background: var(--dark2);
-    color: var(--text);
-  }
-
-  #preview {
-    max-width: 100%;
-    max-height: 220px;
-    border-radius: 10px;
-    margin-top: 12px;
-    display: none;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .foto-btns {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 4px;
-  }
-
-  .foto-btn {
-    flex: 1;
-    background: var(--dark3);
-    border: 1px solid rgba(201,168,76,0.25);
-    color: var(--text);
-    border-radius: 10px;
-    padding: 13px 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-  }
-
-  .foto-btn:hover {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.06);
-  }
-
-  .foto-nombre {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 8px;
-    display: none;
-    text-align: center;
-  }
-
-  .maestros-list { display: flex; flex-direction: column; gap: 10px; }
-
-  .maestro-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .maestro-row input { flex: 1; }
-
-  .btn-remove {
-    background: rgba(255,80,80,0.1);
-    border: 1px solid rgba(255,80,80,0.2);
-    color: #ff6b6b;
-    border-radius: 8px;
-    width: 36px;
-    height: 42px;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: background 0.2s;
-  }
-
+  input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; cursor: pointer; }
+  select option { background: var(--dark2); color: var(--text); }
+  #preview { max-width: 100%; max-height: 220px; border-radius: 10px; margin-top: 12px; display: none; object-fit: cover; width: 100%; }
+  .foto-btns { display: flex; gap: 10px; margin-bottom: 4px; }
+  .foto-btn { flex: 1; background: var(--dark3); border: 1px solid rgba(201,168,76,0.25); color: var(--text); border-radius: 10px; padding: 13px 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; transition: border-color 0.2s; }
+  .foto-btn:hover { border-color: var(--gold); }
+  .foto-nombre { font-size: 12px; color: var(--muted); margin-top: 8px; display: none; text-align: center; }
+  .apoyos-list { display: flex; flex-direction: column; gap: 10px; margin-top: 0; }
+  .apoyo-row { display: flex; gap: 8px; align-items: center; }
+  .apoyo-row input { flex: 1; }
+  .btn-remove { background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.2); color: #ff6b6b; border-radius: 8px; width: 36px; height: 42px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
   .btn-remove:hover { background: rgba(255,80,80,0.2); }
-
-  .btn-add {
-    background: none;
-    border: 1px dashed rgba(201,168,76,0.3);
-    color: var(--gold);
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-    transition: background 0.2s, border-color 0.2s;
-    letter-spacing: 0.05em;
-  }
-
+  .btn-add { background: none; border: 1px dashed rgba(201,168,76,0.3); color: var(--gold); border-radius: 10px; padding: 10px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; margin-top: 10px; transition: background 0.2s; letter-spacing: 0.05em; }
   .btn-add:hover { background: rgba(201,168,76,0.06); border-color: var(--gold); }
-
-  .mensaje-preview {
-    background: #0b3d21;
-    border: 1px solid rgba(37,211,102,0.2);
-    border-radius: 14px;
-    padding: 20px;
-    font-size: 14.5px;
-    line-height: 1.75;
-    white-space: pre-wrap;
-    color: #e8f5e9;
-    min-height: 80px;
-  }
-
-  .mensaje-preview.empty {
-    color: rgba(255,255,255,0.25);
-    font-style: italic;
-    font-size: 13px;
-  }
-
+  .mensaje-preview { background: #0b3d21; border: 1px solid rgba(37,211,102,0.2); border-radius: 14px; padding: 20px; font-size: 14.5px; line-height: 1.75; white-space: pre-wrap; color: #e8f5e9; min-height: 80px; }
+  .mensaje-preview.empty { color: rgba(255,255,255,0.25); font-style: italic; font-size: 13px; }
   .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
-
-  .btn-copy {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    color: #1a1200;
-    border: none;
-    border-radius: 12px;
-    padding: 15px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    transition: opacity 0.2s, transform 0.1s;
-    letter-spacing: 0.03em;
-  }
-
+  .btn-img { background: linear-gradient(135deg, #1a6b3a, #25a05a); color: white; border: none; border-radius: 12px; padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; transition: opacity 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn-img:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-copy { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: #1a1200; border: none; border-radius: 12px; padding: 15px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; transition: opacity 0.2s, transform 0.1s; }
   .btn-copy:hover { opacity: 0.9; transform: translateY(-1px); }
-  .btn-copy:active { transform: translateY(0); }
-
-  .btn-wa {
-    background: var(--green-wa);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 15px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    transition: opacity 0.2s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-decoration: none;
-  }
-
-  .btn-wa:hover { opacity: 0.9; transform: translateY(-1px); }
-
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--gold);
-    color: #1a1200;
-    padding: 12px 24px;
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 500;
-    z-index: 999;
-    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    white-space: nowrap;
-  }
-
+  .btn-wa { background: var(--green-wa); color: white; border: none; border-radius: 12px; padding: 15px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+  .btn-wa:hover { opacity: 0.9; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--gold); color: #1a1200; padding: 12px 24px; border-radius: 100px; font-size: 14px; font-weight: 500; z-index: 999; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
-
-  .nota {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 8px;
-    line-height: 1.5;
-  }
+  .nota { font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px; line-height: 1.5; }
+  #canvasOut { display: none; }
 </style>
 </head>
 <body>
-
 <div class="container">
   <header>
     <span class="cross-icon">✝️</span>
     <h1>Generador de Mensaje<br>Estudio Bíblico</h1>
-    <p>Completa los datos y copia el mensaje listo para WhatsApp</p>
+    <p>Genera tu imagen con foto y texto para WhatsApp</p>
     <div class="divider"></div>
   </header>
-
-  <!-- Foto -->
+ 
   <div class="card">
     <div class="card-title">📸 Foto del Estudio</div>
     <input type="file" accept="image/*" id="fotoInput" onchange="handleFoto(event)" style="display:none">
@@ -354,16 +77,13 @@
     <img id="preview" alt="Vista previa">
     <p class="foto-nombre" id="fotoNombre"></p>
   </div>
-
-  <!-- Datos del estudio -->
+ 
   <div class="card">
     <div class="card-title">📖 Datos del Estudio</div>
-
     <label>Nombre del joven estudiado</label>
-    <input type="text" id="nombreJoven" placeholder="Ej: Cris" oninput="generarMensaje()">
-
+    <input type="text" id="nombreJoven" placeholder="Ej: Cris" oninput="gen()">
     <label>Estudio bíblico</label>
-    <select id="estudio" onchange="generarMensaje()">
+    <select id="estudio" onchange="gen()">
       <option value="">— Selecciona el estudio —</option>
       <option>Buscando a Dios</option>
       <option>La Palabra de Dios</option>
@@ -376,182 +96,206 @@
       <option>Definiciones de Pecado</option>
       <option>Relato Médico de la Crucifixión de Cristo</option>
     </select>
-
-    <label>Número de sesión</label>
-    <select id="sesion" onchange="generarMensaje()">
-      <option value="1">#1</option>
-      <option value="2">#2</option>
-      <option value="3">#3</option>
-      <option value="4">#4</option>
-      <option value="5">#5</option>
-    </select>
   </div>
-
-  <!-- Hermanos que enseñan -->
+ 
   <div class="card">
     <div class="card-title">🙌 Hermanos que enseñan</div>
-    <div class="maestros-list" id="maestrosList">
-      <div class="maestro-row">
-        <input type="text" placeholder="Hermano que lidera" oninput="generarMensaje()">
-      </div>
-      <div class="maestro-row">
-        <input type="text" placeholder="Hermano que apoya" oninput="generarMensaje()">
-        <button class="btn-remove" onclick="removeMaestro(this)">×</button>
+    <label>Hermano que lidera</label>
+    <input type="text" id="lider" placeholder="Nombre del líder" oninput="gen()">
+    <label style="margin-top:16px;">Hermanos que apoyan</label>
+    <div class="apoyos-list" id="apoyosList">
+      <div class="apoyo-row">
+        <input type="text" placeholder="Nombre del hermano" oninput="gen()">
+        <button class="btn-remove" onclick="removeApoyo(this)">×</button>
       </div>
     </div>
-    <button class="btn-add" onclick="addMaestro()">+ Agregar hermano</button>
+    <button class="btn-add" onclick="addApoyo()">+ Agregar hermano</button>
   </div>
-
-  <!-- Vista previa del mensaje -->
+ 
   <div class="card">
     <div class="card-title">💬 Mensaje generado</div>
-    <div class="mensaje-preview empty" id="mensajePreview">
-      El mensaje aparecerá aquí automáticamente...
-    </div>
+    <div class="mensaje-preview empty" id="mensajePreview">El mensaje aparecerá aquí automáticamente...</div>
   </div>
-
-  <!-- Acciones -->
+ 
   <div class="actions">
-    <button class="btn-copy" onclick="copiarMensaje()">📋 Copiar mensaje</button>
+    <button class="btn-img" onclick="generarImagen()">🖼️ Generar imagen con foto + texto</button>
+    <button class="btn-copy" onclick="copiarMensaje()">📋 Copiar solo el texto</button>
     <a class="btn-wa" href="#" onclick="abrirWa(event)">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Abrir en WhatsApp
+      Abrir en WhatsApp (solo texto)
     </a>
   </div>
-
-  <p class="nota">💡 Copia el mensaje y pégalo en tu grupo de WhatsApp junto con la foto</p>
+  <p class="nota">💡 Genera la imagen → se descarga sola → compártela en tu grupo de WhatsApp</p>
 </div>
-
-<div class="toast" id="toast">✅ ¡Mensaje copiado!</div>
-
+ 
+<canvas id="canvasOut"></canvas>
+<div class="toast" id="toast">✅ ¡Listo!</div>
+ 
 <script>
-  let fotoFile = null;
-
+  let fotoDataUrl = null;
+ 
   function abrirGaleria() {
-    const input = document.getElementById('fotoInput');
-    input.removeAttribute('capture');
-    input.click();
+    const i = document.getElementById('fotoInput');
+    i.removeAttribute('capture'); i.click();
   }
-
   function abrirCamara() {
-    const input = document.getElementById('fotoInput');
-    input.setAttribute('capture', 'environment');
-    input.click();
+    const i = document.getElementById('fotoInput');
+    i.setAttribute('capture','environment'); i.click();
   }
-
   function handleFoto(e) {
-    fotoFile = e.target.files[0];
-    if (!fotoFile) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const preview = document.getElementById('preview');
-      preview.src = ev.target.result;
-      preview.style.display = 'block';
-      const nombre = document.getElementById('fotoNombre');
-      nombre.textContent = '✅ Foto cargada: ' + fotoFile.name;
-      nombre.style.display = 'block';
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      fotoDataUrl = ev.target.result;
+      const p = document.getElementById('preview');
+      p.src = fotoDataUrl; p.style.display = 'block';
+      const n = document.getElementById('fotoNombre');
+      n.textContent = '✅ Foto cargada: ' + f.name; n.style.display = 'block';
     };
-    reader.readAsDataURL(fotoFile);
+    r.readAsDataURL(f);
   }
-
-  function getMaestros() {
-    const inputs = document.querySelectorAll('#maestrosList input');
-    return Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
+  function getApoyos() {
+    return Array.from(document.querySelectorAll('#apoyosList input')).map(i=>i.value.trim()).filter(Boolean);
   }
-
-  function generarMensaje() {
+  function gen() {
     const joven = document.getElementById('nombreJoven').value.trim();
     const estudio = document.getElementById('estudio').value;
-    const sesion = document.getElementById('sesion').value;
-    const maestros = getMaestros();
+    
+    const lider = document.getElementById('lider').value.trim();
+    const apoyos = getApoyos();
     const el = document.getElementById('mensajePreview');
-
-    if (!joven || !estudio || maestros.length === 0) {
+    if (!joven || !estudio || !lider) {
       el.textContent = 'El mensaje aparecerá aquí automáticamente...';
-      el.classList.add('empty');
-      return;
+      el.classList.add('empty'); return;
     }
-
-    let linea2 = '';
-    if (maestros.length === 1) {
-      linea2 = `Gracias @${maestros[0]} por liderar con pasión este estudio !!`;
-    } else if (maestros.length === 2) {
-      linea2 = `Gracias @${maestros[0]} por liderar con pasión y @${maestros[1]} 😁 por apoyar en el estudio !!`;
-    } else {
-      const ultimo = maestros[maestros.length - 1];
-      const anteriores = maestros.slice(0, -1).map(m => `@${m}`).join(', ');
-      linea2 = `Gracias ${anteriores} por liderar con pasión y @${ultimo} 😁 por apoyar en el estudio !!`;
-    }
-
     const frases = {
-      'Buscando a Dios': 'quiere buscar a Dios con todo su corazón',
-      'La Palabra de Dios': 'quiere leer la Palabra y ponerla en práctica',
-      'Discipulado': 'está dispuesto a seguir y obedecer a Jesús',
-      'La Venida del Reino': 'quiere ser parte del reino de Dios',
-      'Pecado y Arrepentimiento': 'está dispuesto a arrepentirse y alejarse del pecado',
-      'Luz y Oscuridad': 'quiere pasar de la oscuridad a la luz de Dios',
-      'La Cruz': 'entiende el sacrificio de Jesús en la cruz',
-      'La Iglesia': 'quiere conocer y ser parte de la iglesia de Dios',
-      'Definiciones de Pecado': 'está aprendiendo a identificar y alejarse del pecado',
-      'Relato Médico de la Crucifixión de Cristo': 'comprende el sufrimiento de Jesús por nosotros'
+      'Buscando a Dios':'quiere buscar a Dios con todo su corazón',
+      'La Palabra de Dios':'quiere leer la Palabra y ponerla en práctica',
+      'Discipulado':'está dispuesto a seguir y obedecer a Jesús',
+      'La Venida del Reino':'quiere ser parte del reino de Dios',
+      'Pecado y Arrepentimiento':'está dispuesto a arrepentirse y alejarse del pecado',
+      'Luz y Oscuridad':'quiere pasar de la oscuridad a la luz de Dios',
+      'La Cruz':'entiende el sacrificio de Jesús en la cruz',
+      'La Iglesia':'quiere conocer y ser parte de la iglesia de Dios',
+      'Definiciones de Pecado':'está aprendiendo a identificar y alejarse del pecado',
+      'Relato Médico de la Crucifixión de Cristo':'comprende el sufrimiento de Jesús por nosotros'
     };
-    const frase = frases[estudio] || 'está muy animado de leer la Palabra y poner a Dios en primer lugar';
-    const msg = `Buenas noticias familiaaa 🚀✏️\nTerminamos el estudio bíblico ${estudio} #${sesion} con ${joven}! Es un joven que ${frase} !! ${linea2} Oren por ${joven}, es un gran chico para que sea nuestro próximo hermano 🙏🏼🙏🏼🙏🏼🤍`;
-
-    el.textContent = msg;
-    el.classList.remove('empty');
+    const frase = frases[estudio] || 'está muy animado de leer la Palabra';
+    let lineaH = '';
+    if (apoyos.length === 0) {
+      lineaH = `Gracias @${lider} por liderar con pasión este estudio !!`;
+    } else if (apoyos.length === 1) {
+      lineaH = `Gracias @${lider} por liderar con pasión y @${apoyos[0]} por apoyar en el estudio !!`;
+    } else {
+      lineaH = `Gracias @${lider} por liderar con pasión y ${apoyos.map(a=>'@'+a).join(', ')} por apoyar en el estudio !!`;
+    }
+    const msg = `Buenas noticias familiaaa 🚀✏️\nTerminamos el estudio bíblico ${estudio} con ${joven}! Es un joven que ${frase} !! ${lineaH} Oren por ${joven}, es un gran chico para que sea nuestro próximo hermano 🙏🏼🙏🏼🙏🏼🤍`;
+    el.textContent = msg; el.classList.remove('empty');
   }
-
-  function copiarMensaje() {
+  function getMensaje() {
     const el = document.getElementById('mensajePreview');
-    if (el.classList.contains('empty')) return;
-    const texto = el.textContent;
-
-    navigator.clipboard.writeText(texto).then(() => {
-      mostrarToast();
-    }).catch(() => {
-      const ta = document.createElement('textarea');
-      ta.value = texto;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      mostrarToast();
+    return el.classList.contains('empty') ? null : el.textContent;
+  }
+  function copiarMensaje() {
+    const t = getMensaje(); if (!t) return;
+    navigator.clipboard.writeText(t).then(()=>toast('✅ ¡Texto copiado!')).catch(()=>{
+      const ta=document.createElement('textarea'); ta.value=t;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta); toast('✅ ¡Texto copiado!');
     });
   }
-
-  function mostrarToast() {
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }
-
   function abrirWa(e) {
-    e.preventDefault();
-    const el = document.getElementById('mensajePreview');
-    if (el.classList.contains('empty')) return;
-    const url = `https://wa.me/?text=${encodeURIComponent(el.textContent)}`;
-    window.open(url, '_blank');
+    e.preventDefault(); const t = getMensaje(); if (!t) return;
+    window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');
   }
-
-  function addMaestro() {
-    const list = document.getElementById('maestrosList');
-    const row = document.createElement('div');
-    row.className = 'maestro-row';
-    row.innerHTML = `
-      <input type="text" placeholder="Nombre del hermano" oninput="generarMensaje()">
-      <button class="btn-remove" onclick="removeMaestro(this)">×</button>
-    `;
+  function addApoyo() {
+    const list = document.getElementById('apoyosList');
+    const row = document.createElement('div'); row.className='apoyo-row';
+    row.innerHTML=`<input type="text" placeholder="Nombre del hermano" oninput="gen()"><button class="btn-remove" onclick="removeApoyo(this)">×</button>`;
     list.appendChild(row);
   }
-
-  function removeMaestro(btn) {
-    const rows = document.querySelectorAll('.maestro-row');
-    if (rows.length <= 1) return;
-    btn.closest('.maestro-row').remove();
-    generarMensaje();
+  function removeApoyo(btn) {
+    const rows = document.querySelectorAll('.apoyo-row');
+    if (rows.length<=1) { btn.closest('.apoyo-row').querySelector('input').value=''; gen(); return; }
+    btn.closest('.apoyo-row').remove(); gen();
+  }
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 2800);
+  }
+ 
+  // === GENERAR IMAGEN CON FOTO + TEXTO ===
+  function generarImagen() {
+    const texto = getMensaje();
+    if (!texto) { alert('Completa los datos primero.'); return; }
+    if (!fotoDataUrl) { alert('Selecciona una foto del estudio primero.'); return; }
+ 
+    const img = new Image();
+    img.onload = () => {
+      const W = 900;
+      const imgH = Math.round((img.height / img.width) * W);
+      const fontSize = 30;
+      const padding = 40;
+      const lineHeight = fontSize * 1.6;
+      const maxTW = W - padding * 2;
+ 
+      // Canvas temporal para medir texto
+      const tmpC = document.createElement('canvas');
+      tmpC.width = W; const tmpCtx = tmpC.getContext('2d');
+      tmpCtx.font = `${fontSize}px Arial, sans-serif`;
+ 
+      function calcLines(txt) {
+        const lines = [];
+        for (const para of txt.split('\n')) {
+          const words = para.split(' ');
+          let line = '';
+          for (const w of words) {
+            const test = line + (line?' ':'')+w;
+            if (tmpCtx.measureText(test).width > maxTW && line) { lines.push(line); line=w; }
+            else line=test;
+          }
+          if (line) lines.push(line);
+        }
+        return lines;
+      }
+ 
+      const lines = calcLines(texto);
+      const textBgH = lines.length * lineHeight + padding * 2;
+      const totalH = imgH + textBgH;
+ 
+      const canvas = document.getElementById('canvasOut');
+      canvas.width = W; canvas.height = totalH;
+      const ctx = canvas.getContext('2d');
+ 
+      // Foto
+      ctx.drawImage(img, 0, 0, W, imgH);
+ 
+      // Fondo verde WhatsApp
+      ctx.fillStyle = '#075e54';
+      ctx.fillRect(0, imgH, W, textBgH);
+ 
+      // Texto blanco
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `${fontSize}px Arial, sans-serif`;
+      let y = imgH + padding + fontSize;
+      for (const line of lines) {
+        ctx.fillText(line, padding, y);
+        y += lineHeight;
+      }
+ 
+      // Descargar
+      const link = document.createElement('a');
+      link.download = 'estudio-biblico.jpg';
+      link.href = canvas.toDataURL('image/jpeg', 0.93);
+      link.click();
+      toast('✅ ¡Imagen descargada! Compártela en WhatsApp');
+    };
+    img.src = fotoDataUrl;
   }
 </script>
 </body>
 </html>
+
+
 
