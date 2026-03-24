@@ -245,23 +245,22 @@
 
     const img = new Image();
     img.onload = () => {
-      // Dimensiones: ancho fijo 1080px estilo WhatsApp
       const W = 1080;
       const imgH = Math.round((img.height / img.width) * W);
-
-      // Config texto igual a WhatsApp
-      const fontSize = 38;
-      const lineHeight = fontSize * 1.5;
-      const paddingX = 44;
-      const paddingY = 36;
+      const fontSize = 52; // letras más grandes
+      const lineHeight = fontSize * 1.55;
+      const paddingX = 50;
+      const paddingY = 44;
       const maxTW = W - paddingX * 2;
       const borderRadius = 24;
 
-      // Medir líneas
+      // Usar fuente Segoe UI Emoji para emojis perfectos
+      const fontFace = `${fontSize}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", Arial, sans-serif`;
+
       const tmpC = document.createElement('canvas');
       tmpC.width = W;
       const tmpCtx = tmpC.getContext('2d');
-      tmpCtx.font = `${fontSize}px -apple-system, Helvetica, Arial, sans-serif`;
+      tmpCtx.font = fontFace;
 
       function calcLines(txt) {
         const lines = [];
@@ -288,64 +287,68 @@
       canvas.height = totalH;
       const ctx = canvas.getContext('2d');
 
-      // 1. Fondo negro total
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, W, totalH);
-
-      // 2. Foto centrada arriba
       ctx.drawImage(img, 0, 0, W, imgH);
 
-      // 3. Burbuja WhatsApp verde con bordes redondeados
-      const bx = 0;
-      const by = imgH;
-      const bw = W;
-      const bh = bubbleH;
+      // Burbuja verde WhatsApp
       ctx.fillStyle = '#075e54';
       ctx.beginPath();
-      ctx.moveTo(bx + borderRadius, by);
-      ctx.lineTo(bx + bw - borderRadius, by);
-      ctx.quadraticCurveTo(bx + bw, by, bx + bw, by + borderRadius);
-      ctx.lineTo(bx + bw, by + bh);
-      ctx.lineTo(bx, by + bh);
-      ctx.lineTo(bx, by + borderRadius);
-      ctx.quadraticCurveTo(bx, by, bx + borderRadius, by);
+      ctx.moveTo(borderRadius, imgH);
+      ctx.lineTo(W - borderRadius, imgH);
+      ctx.quadraticCurveTo(W, imgH, W, imgH + borderRadius);
+      ctx.lineTo(W, imgH + bubbleH);
+      ctx.lineTo(0, imgH + bubbleH);
+      ctx.lineTo(0, imgH + borderRadius);
+      ctx.quadraticCurveTo(0, imgH, borderRadius, imgH);
       ctx.closePath();
       ctx.fill();
 
-      // 4. Texto blanco estilo WhatsApp
+      // Texto con emojis perfectos
       ctx.fillStyle = '#ffffff';
-      ctx.font = `${fontSize}px -apple-system, Helvetica, Arial, sans-serif`;
+      ctx.font = fontFace;
       ctx.textBaseline = 'top';
-      let y = by + paddingY;
+      let y = imgH + paddingY;
       for (const line of lines) {
         ctx.fillText(line, paddingX, y);
         y += lineHeight;
       }
 
-      // 5. Timestamp estilo WhatsApp (esquina inferior derecha)
+      // Timestamp
       const now = new Date();
       const hh = String(now.getHours()).padStart(2,'0');
       const mm = String(now.getMinutes()).padStart(2,'0');
-      ctx.font = `28px -apple-system, Helvetica, Arial, sans-serif`;
+      ctx.font = `32px "Segoe UI Emoji", Arial, sans-serif`;
       ctx.fillStyle = 'rgba(255,255,255,0.65)';
       ctx.textBaseline = 'bottom';
-      ctx.fillText(`${hh}:${mm}`, W - paddingX - 60, by + bh - 16);
+      ctx.fillText(`${hh}:${mm}`, W - paddingX - 70, imgH + bubbleH - 18);
 
-      // Descargar
-      const link = document.createElement('a');
-      link.download = 'estudio-biblico.jpg';
-      link.href = canvas.toDataURL('image/jpeg', 0.95);
-      link.click();
-      toast('✅ ¡Imagen lista! Compártela en WhatsApp');
+      // Compartir directo — Web Share API (celular) o descargar (PC)
+      canvas.toBlob(blob => {
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'estudio-biblico.jpg', { type: 'image/jpeg' })] })) {
+          const file = new File([blob], 'estudio-biblico.jpg', { type: 'image/jpeg' });
+          navigator.share({
+            files: [file],
+            title: 'Estudio Bíblico'
+          }).then(() => toast('✅ ¡Compartido!')).catch(() => descargar(blob));
+        } else {
+          descargar(blob);
+        }
+      }, 'image/jpeg', 0.95);
     };
     img.src = fotoDataUrl;
+  }
+
+  function descargar(blob) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = 'estudio-biblico.jpg';
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast('✅ ¡Imagen descargada! Compártela en WhatsApp');
   }
 </script>
 </body>
 </html>
-
-
-
-
-
 
